@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gary Bardet — AI/ML Engineering Portfolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:   #E8603C;
+      --dark:     #1a1a1a;
+      --mid:      #444;
+      --light:    #fafafa;
+      --border:   #e5e5e5;
+      --card-bg:  #ffffff;
+      --tag-bg:   #f0f0f0;
+      --tag-color:#444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--dark);
+      color: #fff;
+      padding: 64px 24px 56px;
+      text-align: center;
+    }
+    .avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      letter-spacing: -1px;
+    }
+    header h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 6px; }
+    header .role {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+    }
+    header p {
+      font-size: 0.97rem;
+      color: #aaa;
+      max-width: 560px;
+      margin: 0 auto 24px;
+    }
+    .header-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .header-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.85rem;
+      border: 1px solid #444;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: border-color .15s, color .15s;
+    }
+    .header-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── NAV ── */
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      overflow-x: auto;
+    }
+    nav li a {
+      display: block;
+      padding: 14px 18px;
+      text-decoration: none;
+      color: var(--mid);
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+    nav li a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── MAIN ── */
+    main { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 60px; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .section-header h2 { font-size: 1.2rem; font-weight: 700; }
+    .section-header .count {
+      font-size: 0.8rem;
+      color: #999;
+      font-weight: 500;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: box-shadow .2s, transform .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,.09);
+      transform: translateY(-2px);
+    }
+    .card.coming-soon {
+      border-style: dashed;
+      background: #fafafa;
+      cursor: default;
+      pointer-events: none;
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .card-type {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-live    { background: #dcfce7; color: #166534; }
+    .badge-soon    { background: #f3f4f6; color: #9ca3af; }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--dark);
+    }
+    .card p {
+      font-size: 0.875rem;
+      color: var(--mid);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tags span {
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      border-radius: 4px;
+      padding: 3px 9px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .card-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .card-links a {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 5px 12px;
+      border-radius: 5px;
+      transition: background .15s, color .15s;
+    }
+    .card-links a:hover { background: var(--accent); color: #fff; }
+    .card-links a.secondary {
+      color: var(--mid);
+      border-color: var(--border);
+    }
+    .card-links a.secondary:hover { background: var(--dark); color: #fff; border-color: var(--dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: #999;
+    }
+    footer a { color: var(--mid); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar">GB</div>
+  <h1>Gary Bardet</h1>
+  <p class="role">AI/ML Engineer &nbsp;·&nbsp; Applied AI &nbsp;·&nbsp; 20+ Years Engineering</p>
+  <p>Software Engineer transitioning into AI/ML. I build production-grade data science projects that bridge ML research and enterprise engineering — Python, Java, and everything in between.</p>
+  <div class="header-links">
+    <a href="https://github.com/agbardet" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/garybardet" target="_blank">LinkedIn</a>
+    <a href="mailto:agbardet@gmail.com">Email</a>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#ml">Machine Learning</a></li>
+    <li><a href="#genai-python">Gen AI — Python</a></li>
+    <li><a href="#genai-java">Gen AI — Java</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ── MACHINE LEARNING ── -->
+  <section class="section" id="ml">
+    <div class="section-header">
+      <h2>Machine Learning Projects</h2>
+      <span class="count">EDA · Classification · Regression · Deep Learning · NLP</span>
+    </div>
+    <div class="grid">
+
+      <!-- FoodHub — LIVE -->
+      <a class="card" href="https://agbardet.github.io/foodhub-nyc/" target="_blank">
+        <div class="card-top">
+          <span class="card-type">EDA</span>
+          <span class="badge badge-live">Live</span>
+        </div>
+        <h3>FoodHub NYC — Revenue &amp; Demand Intelligence</h3>
+        <p>Business-focused EDA on 1,898 food delivery orders. Surfaces a 39% customer feedback gap, $6K revenue concentration risk, and 5.87-min weekday delivery penalty — with 5 prioritized recommendations.</p>
+        <div class="tags">
+          <span>Python</span><span>Pandas</span><span>Seaborn</span><span>Matplotlib</span><span>EDA</span>
+        </div>
+        <div class="card-links">
+          <a href="https://agbardet.github.io/foodhub-nyc/">Live Project</a>
+          <a class="secondary" href="https://github.com/agbardet/foodhub-nyc" target="_blank">GitHub</a>
+        </div>
+      </a>
+
+      <!-- Coming Soon cards -->
+      <div class="card coming-soon">
+        <div class="card-top">
+          <span class="card-type">Classification</span>
+          <span class="badge badge-soon">Coming Soon</span>
+        </div>
+        <h3>ML Classification Project</h3>
+        <p>Supervised learning model with feature engineering, cross-validation, and business-framed evaluation metrics.</p>
+        <div class="tags">
+          <span>Python</span><span>Scikit-learn</span><span>Feature Engineering</span>
+        </div>
+      </div>
+
+      <div class="card coming-soon">
+        <div class="card-top">
+          <span class="card-type">Deep Learning</span>
+          <span class="badge badge-soon">Coming Soon</span>
+        </div>
+        <h3>Deep Learning Project</h3>
+        <p>Neural network architecture with training pipeline, evaluation, and model card documentation.</p>
+        <div class="tags">
+          <span>Python</span><span>PyTorch</span><span>Neural Networks</span>
+        </div>
+      </div>
+
+      <div class="card coming-soon">
+        <div class="card-top">
+          <span class="card-type">NLP</span>
+          <span class="badge badge-soon">Coming Soon</span>
+        </div>
+        <h3>NLP / Text Analysis Project</h3>
+        <p>Natural language processing pipeline with text classification, embeddings, or information extraction.</p>
+        <div class="tags">
+          <span>Python</span><span>NLP</span><span>Transformers</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── GEN AI PYTHON ── -->
+  <section class="section" id="genai-python">
+    <div class="section-header">
+      <h2>Gen AI — Python</h2>
+      <span class="count">LLM Applications · Agents · RAG · API Integration</span>
+    </div>
+    <div class="grid">
+
+      <div class="card coming-soon">
+        <div class="card-top">
+          <span class="card-type">LLM Application</span>
+          <span class="badge badge-soon">Coming Soon</span>
+        </div>
+        <h3>Gen AI Python Project</h3>
+        <p>Production-grade LLM application with prompt engineering, tool use, or retrieval-augmented generation.</p>
+        <div class="tags">
+          <span>Python</span><span>Claude API</span><span>FastAPI</span>
+        </div>
+      </div>
+
+      <div class="card coming-soon">
+        <div class="card-top">
+          <span class="card-type">AI Agent</span>
+          <span class="badge badge-soon">Coming Soon</span>
+        </div>
+        <h3>AI Agent System</h3>
+        <p>Multi-step autonomous agent with tool orchestration, memory, and structured output — built with the Claude API.</p>
+        <div class="tags">
+          <span>Python</span><span>Agents</span><span>Claude API</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── GEN AI JAVA ── -->
+  <section class="section" id="genai-java">
+    <div class="section-header">
+      <h2>Gen AI — Java</h2>
+      <span class="count">Enterprise AI · Spring Boot · Java LLM Integration</span>
+    </div>
+    <div class="grid">
+
+      <div class="card coming-soon">
+        <div class="card-top">
+          <span class="card-type">Java / Spring Boot</span>
+          <span class="badge badge-soon">Coming Soon</span>
+        </div>
+        <h3>Enterprise Gen AI Service</h3>
+        <p>Production-grade AI integration built in Java — applying 20+ years of enterprise engineering to LLM-powered backends.</p>
+        <div class="tags">
+          <span>Java</span><span>Spring Boot</span><span>LLM Integration</span>
+        </div>
+      </div>
+
+      <div class="card coming-soon">
+        <div class="card-top">
+          <span class="card-type">Java / RAG</span>
+          <span class="badge badge-soon">Coming Soon</span>
+        </div>
+        <h3>Java RAG Pipeline</h3>
+        <p>Retrieval-augmented generation pipeline in Java with vector search, document ingestion, and enterprise-grade observability.</p>
+        <div class="tags">
+          <span>Java</span><span>RAG</span><span>Vector Search</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Gary Bardet &nbsp;·&nbsp; AI/ML Engineering Portfolio &nbsp;·&nbsp;
+    <a href="https://github.com/agbardet" target="_blank">GitHub</a> &nbsp;·&nbsp;
+    <a href="https://linkedin.com/in/garybardet" target="_blank">LinkedIn</a>
+  </p>
+</footer>
+
+</body>
+</html>
